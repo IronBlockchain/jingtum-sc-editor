@@ -1,7 +1,8 @@
 import {actionTypes} from '../actions'
+import codeSample from '../constants/sampleCode/dataStorage';
 
 const init = {
-  code: 'start coding here:'
+  code: codeSample
 }
 
 export default (state = init, action) => {
