@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import AceEditor from 'react-ace';
+import AceEditor from 'react-ace'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import {onEditorChange} from "../actions/index";
 
 import 'brace/mode/lua';
 import 'brace/theme/github';
 
-export default class Editor extends Component {
+class Editor extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {code: ''}
   }
 
   componentDidMount() {
@@ -19,22 +21,20 @@ export default class Editor extends Component {
   render() {
     const that = this;
 
-    const onChange = (code) => {
-      this.setState({code})
-      console.log(this.state.code)
-    }
-
     return (
       <AceEditor
         mode="lua"
         theme="github"
-        value={that.state.code}
-        onChange={onChange}
+        value={that.props.code}
+        onChange={(code)=> this.props.dispatch(onEditorChange(code))}
         name="editor_id"
         width="1200px"
         editorProps={{$blockScrolling: true}}
       />
     )
   }
-
 }
+
+export default connect(
+  store => ({code: store.editor.code})
+)(Editor)
